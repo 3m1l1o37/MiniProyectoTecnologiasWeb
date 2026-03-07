@@ -92,6 +92,12 @@ Terminar
 <!-- PREGUNTA EXCLUSIONES -->
 <div id="pantallaPreguntaExclusiones" style="display:none;">
 
+<div class="mb-3">
+<button id="btnBackFromPreguntaExclusiones" class="btn btn-secondary">
+&lt;
+</button>
+</div>
+
 <h3 class="text-center text-primary mb-4">
 Exclusiones
 </h3>
@@ -133,32 +139,137 @@ Continuar
 
 <!-- PANTALLA EXCLUSIONES -->
 <div id="pantallaExclusiones" style="display:none;">
-<h3 class="text-center text-primary mb-4">
-Selecciona exclusiones
-</h3>
+
+<div class="mb-3">
+<button id="btnBackFromExclusiones" class="btn btn-secondary">
+&lt;
+</button>
 </div>
 
+<div id="contenidoExclusiones"></div>
+
+</div>
+
+<!-- PantallaNombreSorteo -->
+<div id="pantallaNombreSorteo" style="display: none;">
+    <div class="mb-3">
+    <button id="btnBackFromNombreSorteo" class="btn btn-secondary">
+    &lt;
+    </button>
+    </div>
+
+    <h3 class="text-center text-primary mb-3">
+    Nombre del Sorteo
+    </h3>
+
+    <p class="text-muted text-center mb-3">
+    Selecciona un nombre o escribe uno personalizado
+    </p>
+
+    <div id="opcionesNombreSorteo" class="mb-3"></div>
+
+    <input
+    type="text"
+    id="inputNombrePersonalizado"
+    class="form-control mb-3"
+    placeholder="Nombre personalizado">
+
+    <button id="btnContinuarNombreSorteo"
+    class="btn btn-primary w-100">
+    Continuar
+    </button>
+</div>
+
+
+<!-- PantallaPresupuestoSorteo -->
+<div id="pantallaPresupuestoSorteo" style="display: none;">
+    <div class="mb-3">
+    <button id="btnBackFromPresupuestoSorteo" class="btn btn-secondary">
+    &lt;
+    </button>
+    </div>
+
+    <h3 class="text-center text-primary mb-3">
+    Presupuesto del Regalo
+    </h3>
+
+    <p class="text-muted text-center mb-3">
+    Selecciona un presupuesto o escribe uno personalizado
+    </p>
+
+    <div id="opcionesPresupuestoSorteo" class="mb-3"></div>
+
+    <input
+    type="text"
+    id="inputPresupuestoPersonalizado"
+    class="form-control mb-3"
+    placeholder="Ejemplo: $250">
+
+    <button id="btnContinuarPresupuestoSorteo"
+    class="btn btn-primary w-100">
+    Continuar
+    </button>
+</div>
+
+<!-- PantallaFechaSorteo -->
+<div id="pantallaFechaSorteo" style="display:none;">
+
+    <div class="mb-3">
+        <button id="btnBackFromFechaSorteo" class="btn btn-secondary">
+        &lt;
+        </button>
+    </div>
+
+    <h3 class="text-center text-primary mb-3">
+        Fecha del Sorteo
+    </h3>
+
+    <p class="text-muted text-center mb-3">
+        Selecciona cuándo se realizará el sorteo
+    </p>
+
+    <div id="opcionesFechaSorteo" class="mb-3"></div>
+
+    <div id="contenedorCalendario" style="display:none;" class="mb-3">
+      <input 
+      type="date"
+      id="inputFechaPersonalizada"
+      class="form-control">
+    </div>
+
+    <button id="btnContinuarFechaSorteo"
+        class="btn btn-primary w-100">
+        Continuar
+    </button>
+
+</div>
 
 <!-- PANTALLA SORTEO -->
 <div id="pantallaSorteo" style="display:none;">
 
-<h3 class="text-center text-primary mb-4">
-Resultado del Sorteo 🎉
-</h3>
+    <div class="mb-3">
+        <button id="btnBackFromSorteo" class="btn btn-secondary">
+        &lt;
+        </button>
+    </div>
 
-<div id="resultadoSorteo"
-class="list-group mb-3">
+    <h3 class="text-center text-primary mb-4">
+        Resultado del Sorteo 
+    </h3>
+
+    <!-- Div de la info del sorteo -->
+    <div id="infoSorteo" class="mb-3"></div>
+
+    <div id="resultadoSorteo" class="list-group mb-3"> </div>
+
+    <button id="btnGenerarSorteo" class="btn btn-success w-100 mb-2">
+        Generar Sorteo
+    </button>
+
 </div>
 
-<button id="btnGenerarSorteo"
-class="btn btn-success w-100 mb-2">
-Generar Sorteo
-</button>
-
-</div>
-
-</div>
-</div>
+<!-- </div>
+</div> -->
 
 <script src="app.js"></script>
 
