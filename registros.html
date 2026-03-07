@@ -11,123 +11,158 @@
 
 <body class="bg-primary bg-opacity-10">
 
-<div class="container vh-100 d-flex align-items-center justify-content-center">
+<div class="container min-vh-100 d-flex align-items-center justify-content-center py-4">
 
-    <div class="card shadow-lg p-4 rounded-4 col-md-6">
+<div class="card shadow-lg p-4 rounded-4 col-md-6">
 
-        <!-- PANTALLA USUARIO -->
-        <div id="pantallaUsuario">
+<!-- PANTALLA USUARIO -->
+<div id="pantallaUsuario">
 
-            <h3 class="text-center text-primary mb-4">
-                Ingresa tu nombre
-            </h3>
+<h3 class="text-center text-primary mb-4">
+Ingresa tu nombre
+</h3>
 
-            <img src="logo.png" alt="imagen Logo" class="w-100">
-            <input 
-                type="text"
-                id="nombreUsuario"
-                class="form-control mb-3"
-                placeholder="Tu nombre">
+<img src="logo.png" alt="logo" class="w-100 mb-3">
 
-            <div class="text-center">
-                <button id="btnContinuar"
-                        class="btn btn-primary">
-                    Continuar
-                </button>
-            </div>
+<input type="text"
+id="nombreUsuario"
+class="form-control mb-3"
+placeholder="Tu nombre">
 
-        </div>
+<div class="form-check mb-3">
+<input class="form-check-input"
+type="checkbox"
+id="incluirOrganizador">
 
+<label class="form-check-label">
+Quiero participar en el sorteo
+</label>
+</div>
 
-        <!-- PANTALLA PARTICIPANTES -->
-        <div id="pantallaParticipantes" style="display:none;">
-
-            <h3 class="text-center text-primary mb-3">
-                Agregar participantes
-            </h3>
-
-            <input 
-                type="text"
-                id="nombreParticipante"
-                class="form-control mb-3"
-                placeholder="Nombre del participante">
-
-            <div class="d-flex gap-2 mb-3">
-                
-                    <button id="btnAgregar"
-                        class="btn btn-primary w-50 p-md-2">
-                    Agregar
-                </button>
-
-                <button id="btnTerminar"
-                        class="btn btn-secondary w-50 p-md-2">
-                    Terminar
-                </button>
-             
-                
-
-            </div>
-
-            <h5 class="text-secondary">Participantes:</h5>
-
-            <!-- la lista empieza vcia we, no le pongas na -->
-            <ul class="list-group" id="listaParticipantes"></ul> 
-
-        </div>
-
-        <!-- Pantalla Pregunta Exclusiones -->
-        <div id="pantallaPreguntaExclusiones" style="display: none;">
-            <h3 class="text-center text-primary mb-5">
-                Exclusiones
-            </h3>
-            <div class="d-flex gap-2 mb-3">
-
-                <button id="btnExcluir"
-                        class="btn btn-primary w-50">
-                    Excluir
-                </button>
-
-                <button id="btnOmitir"
-                        class="btn btn-secondary w-50">
-                    Omitir
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- PAntalla Exclusiones -->
-        <div id="pantallaExclusiones" style="display: none;">
-            <h3 class="text-center text-primary mb-4">
-                Selecciona exclusiones
-            </h3>
-        </div>
-
-        <!-- Pantalla Sorteo -->
-        <div id="pantallaSorteo" style="display:none;">
-
-            <h3 class="text-center text-primary mb-4">
-                Resultado del Sorteo 🎉
-            </h3>
-
-            <div id="resultadoSorteo"
-                class="list-group mb-3">
-            </div>
-
-            <button id="btnGenerarSorteo"
-                    class="btn btn-success w-100 mb-2">
-                Generar Sorteo
-            </button>
-
-        </div>
-
-    </div>
+<div class="text-center">
+<button id="btnContinuar" class="btn btn-primary">
+Continuar
+</button>
+</div>
 
 </div>
 
-    <script src="app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+<!-- PANTALLA PARTICIPANTES -->
+<div id="pantallaParticipantes" style="display:none;">
+
+<div class="mb-3">
+<button id="btnBackToUsuario" class="btn btn-secondary">
+&lt;
+</button>
+</div>
+
+<h3 class="text-center text-primary mb-3">
+Agregar participantes
+</h3>
+
+<div id="alertaParticipantes"></div>
+
+<input type="text"
+id="nombreParticipante"
+class="form-control mb-3"
+placeholder="Nombre del participante">
+
+<div class="d-flex gap-2 mb-3">
+
+<button id="btnAgregar"
+class="btn btn-primary w-50">
+Agregar
+</button>
+
+<button id="btnTerminar"
+class="btn btn-secondary w-50">
+Terminar
+</button>
+
+</div>
+
+<h5 class="text-secondary">Participantes:</h5>
+
+<ul class="list-group" id="listaParticipantes"></ul>
+
+</div>
+
+
+<!-- PREGUNTA EXCLUSIONES -->
+<div id="pantallaPreguntaExclusiones" style="display:none;">
+
+<h3 class="text-center text-primary mb-4">
+Exclusiones
+</h3>
+
+<p class="text-center text-muted">
+Las exclusiones requieren al menos 4 personas.
+</p>
+
+<div class="form-check">
+<input class="form-check-input"
+type="radio"
+name="exclusion"
+id="noExclusiones"
+checked>
+
+<label class="form-check-label">
+No establecer exclusiones
+</label>
+</div>
+
+<div class="form-check mb-3">
+<input class="form-check-input"
+type="radio"
+name="exclusion"
+id="siExclusiones">
+
+<label class="form-check-label">
+Establecer exclusiones
+</label>
+</div>
+
+<button id="btnContinuarExclusiones"
+class="btn btn-primary w-100">
+Continuar
+</button>
+
+</div>
+
+
+<!-- PANTALLA EXCLUSIONES -->
+<div id="pantallaExclusiones" style="display:none;">
+<h3 class="text-center text-primary mb-4">
+Selecciona exclusiones
+</h3>
+</div>
+
+
+<!-- PANTALLA SORTEO -->
+<div id="pantallaSorteo" style="display:none;">
+
+<h3 class="text-center text-primary mb-4">
+Resultado del Sorteo 🎉
+</h3>
+
+<div id="resultadoSorteo"
+class="list-group mb-3">
+</div>
+
+<button id="btnGenerarSorteo"
+class="btn btn-success w-100 mb-2">
+Generar Sorteo
+</button>
+
+</div>
+
+</div>
+</div>
+
+<script src="app.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
