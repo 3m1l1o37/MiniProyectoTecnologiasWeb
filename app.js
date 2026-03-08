@@ -4,6 +4,7 @@ let participantes = [];
 let exclusiones = {};
 let nombreSorteo = "";
 let fechaSorteo = "";
+let pantallaActual = "pantallaUsuario"; //linea para que al recargar te quedes en tu pantalla, no vuelvas al inicio
 
 // nombres por defecto
 const nombresSorteoDefault = [
@@ -98,6 +99,72 @@ btnBackFromExclusiones.addEventListener("click", volverDeExclusiones);
 btnBackFromSorteo.addEventListener("click", volverDeSorteo);
 
 
+// ===== cargar datos guardados =====
+cargarDatosSorteo();
+restaurarPantalla();
+// actualizarLista();
+
+// ===== LOCAL STORAGE =====
+
+function guardarDatosSorteo(){
+
+    const datos = {
+        usuario,
+        participantes,
+        exclusiones,
+        nombreSorteo,
+        presupuestoSorteo,
+        fechaSorteo,
+        pantallaActual
+    };
+
+    localStorage.setItem("datosSorteo", JSON.stringify(datos));
+}
+
+function cargarDatosSorteo(){
+
+    const datosGuardados = localStorage.getItem("datosSorteo");
+
+    if(!datosGuardados) return;
+
+    const datos = JSON.parse(datosGuardados);
+
+    usuario = datos.usuario || "";
+    participantes = datos.participantes || [];
+    exclusiones = datos.exclusiones || {};
+    nombreSorteo = datos.nombreSorteo || "";
+    presupuestoSorteo = datos.presupuestoSorteo || "";
+    fechaSorteo = datos.fechaSorteo || "";
+    pantallaActual = datos.pantallaActual || "pantallaUsuario";
+
+}
+
+//funcion para restaurar la pantalla al recargar
+function restaurarPantalla(){
+
+    const pantallas = [
+        pantallaUsuario,
+        pantallaParticipantes,
+        pantallaPreguntaExclusiones,
+        pantallaExclusiones,
+        pantallaNombreSorteo,
+        pantallaPresupuestoSorteo,
+        pantallaFechaSorteo,
+        pantallaSorteo
+    ];
+
+    pantallas.forEach(p => p.style.display = "none");
+
+    document.getElementById(pantallaActual).style.display = "block";
+
+    actualizarLista();
+
+    if(pantallaActual === "pantallaSorteo"){
+        mostrarInfoSorteo();
+    }
+
+}
+
 // guardar usuario
 function guardarUsuario(){
 
@@ -118,6 +185,8 @@ function guardarUsuario(){
     pantallaParticipantes.style.display = "block";
 
     actualizarLista();
+    pantallaActual = "pantallaParticipantes";
+    guardarDatosSorteo();//localStorage
 }
 
 
@@ -194,7 +263,7 @@ function agregarParticipante(){
     }
 
     participantes.push(nombre);
-
+    guardarDatosSorteo();//localstorage
     actualizarLista();
 
     inputParticipante.value = "";
@@ -228,6 +297,7 @@ function actualizarLista(){
                 participantes.splice(index,1);
 
                 actualizarLista();
+                guardarDatosSorteo();//localStorage
             };
 
             item.appendChild(btnEliminar);
@@ -260,11 +330,16 @@ function terminarRegistro(){
 
         omitirExclusiones();
 
-        pantallaSorteo.style.display = "block";
+        antallaActual = "pantallaNombreSorteo";
+        guardarDatosSorteo();
+
+        pantallaNombreSorteo.style.display = "block";
+        mostrarOpcionesNombreSorteo();
 
         return;
     }
-
+    pantallaActual = "pantallaPreguntaExclusiones";
+    guardarDatosSorteo();
     pantallaPreguntaExclusiones.style.display = "block";
 
 }
@@ -424,7 +499,7 @@ function mostrarPantallaExclusiones(){
                 
                 // Validar y actualizar en tiempo real
                 actualizarValidacionExclusiones();
-
+                guardarDatosSorteo(); //localStorage
             };
 
             const label = document.createElement("label");
@@ -553,24 +628,20 @@ function guardarNombreSorteo(){
         alert("Selecciona o escribe un nombre para el sorteo");
         return;
     }
+    pantallaActual = "pantallaPresupuestoSorteo";
+    guardarDatosSorteo();//localStorage
+
     pantallaNombreSorteo.style.display = "none";
     pantallaPresupuestoSorteo.style.display = "block";
     mostrarOpcionesPresupuesto();
 }
 
 btnBackFromNombreSorteo.addEventListener("click", ()=>{
-
     pantallaNombreSorteo.style.display = "none";
     pantallaPreguntaExclusiones.style.display = "block";
 
 });
 
-// btnBackFromNombreSorteo.addEventListener("click", ()=>{
-
-//     pantallaNombreSorteo.style.display = "none";
-//     pantallaPreguntaExclusiones.style.display = "block";
-
-// });
 
 //SeleccionarPresupuestoDelSorteo
 function mostrarOpcionesPresupuesto(){
@@ -612,6 +683,9 @@ function guardarPresupuesto(){
         alert("Selecciona o escribe un presupuesto");
         return;
     }
+    pantallaActual = "pantallaFechaSorteo";
+    guardarDatosSorteo();//localStorage
+
     pantallaPresupuestoSorteo.style.display = "none";
     pantallaFechaSorteo.style.display = "block";
     mostrarOpcionesFecha();
@@ -702,6 +776,9 @@ function guardarFechaSorteo(){
         alert("Selecciona una fecha para el sorteo");
         return;
     }
+    pantallaActual = "pantallaSorteo";
+    guardarDatosSorteo();//localStorage
+
 
     pantallaFechaSorteo.style.display = "none";
     mostrarInfoSorteo();
