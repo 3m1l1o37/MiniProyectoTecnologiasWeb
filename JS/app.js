@@ -330,7 +330,7 @@ function terminarRegistro(){
 
         omitirExclusiones();
 
-        antallaActual = "pantallaNombreSorteo";
+        pantallaActual = "pantallaNombreSorteo";
         guardarDatosSorteo();
 
         pantallaNombreSorteo.style.display = "block";
@@ -589,32 +589,109 @@ function reiniciarPantallaSorteo(){
 }
 
 
-//seleccionarNombre del sorteo
+//seleccionarNombre del sorteo - CON DRAG AND DROP
 function mostrarOpcionesNombreSorteo(){
-
     opcionesNombreSorteo.innerHTML = "";
     nombresSorteoDefault.forEach(nombre=>{
         const btn = document.createElement("button");
-        btn.className = "btn btn-outline-primary w-100 mb-2";
+        btn.className = "btn btn-outline-primary w-100 mb-2 btn-draggable";
         btn.textContent = nombre;
-        btn.onclick = ()=>{
-
-            nombreSorteo = nombre;
-
-            inputNombrePersonalizado.value = nombre;
-
-            // marcar visualmente
-            document.querySelectorAll("#opcionesNombreSorteo button")
-            .forEach(b=>b.classList.remove("active"));
-
-            btn.classList.add("active");
+        btn.draggable = true;
+        
+        // Eventos de drag
+        btn.addEventListener("dragstart", (e) => {
+            e.dataTransfer.effectAllowed = "copy";
+            e.dataTransfer.setData("text/plain", nombre);
+            btn.classList.add("dragging");
+        });
+        
+        btn.addEventListener("dragend", (e) => {
+            btn.classList.remove("dragging");
+        });
+        
+        // Click alternativo
+        btn.onclick = (e) => {
+            if(e.detail > 0) { // solo si es click real, no drag
+                seleccionarNombreSorteo(nombre);
+            }
         };
 
         opcionesNombreSorteo.appendChild(btn);
-
     });
-
+    
+    // Configurar área de drop
+    configurarAreaDropNombre();
 }
+
+// Configura los eventos del área de drop
+function configurarAreaDropNombre(){
+    areaDropNombreSorteo.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "copy";
+        areaDropNombreSorteo.classList.add("drag-over");
+    });
+    
+    areaDropNombreSorteo.addEventListener("dragleave", (e) => {
+        if(e.target === areaDropNombreSorteo){
+            areaDropNombreSorteo.classList.remove("drag-over");
+        }
+    });
+    
+    areaDropNombreSorteo.addEventListener("drop", (e) => {
+        e.preventDefault();
+        areaDropNombreSorteo.classList.remove("drag-over");
+        
+        const nombre = e.dataTransfer.getData("text/plain");
+        if(nombre){
+            seleccionarNombreSorteo(nombre);
+        }
+    });
+}
+
+// Función que se ejecuta cuando se selecciona un nombre
+function seleccionarNombreSorteo(nombre){
+    nombreSorteo = nombre;
+    inputNombrePersonalizado.value = nombre;
+    
+    // Mostrar el nombre en el área de drop
+    areaDropNombreSorteo.innerHTML = `
+        <div class="nombre-soltado">
+            ${nombre}
+            <button class="btn btn-sm btn-light ms-2" onclick="limpiarNombreSorteo()" style="padding: 2px 8px; font-size: 0.8rem;">
+                ✕
+            </button>
+        </div>
+    `;
+    areaDropNombreSorteo.classList.add("has-content");
+}
+
+// Función para limpiar la selección
+function limpiarNombreSorteo(){
+    nombreSorteo = "";
+    inputNombrePersonalizado.value = "";
+    areaDropNombreSorteo.innerHTML = `<p class="text-muted text-center">Arrastra aquí o escribe</p>`;
+    areaDropNombreSorteo.classList.remove("has-content");
+}
+
+// Listener para input personalizado
+inputNombrePersonalizado.addEventListener("input", (e) => {
+    const valor = e.target.value.trim();
+    if(valor !== ""){
+        nombreSorteo = valor;
+        // Mostrar en el área de drop
+        areaDropNombreSorteo.innerHTML = `
+            <div class="nombre-soltado">
+                ${valor}
+                <button class="btn btn-sm btn-light ms-2" onclick="limpiarNombreSorteo()" style="padding: 2px 8px; font-size: 0.8rem;">
+                    ✕
+                </button>
+            </div>
+        `;
+        areaDropNombreSorteo.classList.add("has-content");
+    } else {
+        limpiarNombreSorteo();
+    }
+});
 
 btnContinuarNombreSorteo.addEventListener("click", guardarNombreSorteo);
 function guardarNombreSorteo(){
@@ -625,7 +702,7 @@ function guardarNombreSorteo(){
         nombreSorteo = personalizado;
     }
     if(nombreSorteo === ""){
-        alert("Selecciona o escribe un nombre para el sorteo");
+        alert("Arrastra un nombre o escribe uno personalizado para el sorteo");
         return;
     }
     pantallaActual = "pantallaPresupuestoSorteo";

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/CSS/styles.css">
 
 <title>Sorteador</title>
 </head>
@@ -13,7 +14,7 @@
 
 <div class="container min-vh-100 d-flex align-items-center justify-content-center py-4">
 
-<div class="card shadow-lg p-4 rounded-4 col-md-6">
+<div class="card shadow-lg p-4 rounded-4 col-md-8 col-lg-10">
 
 <!-- PANTALLA USUARIO -->
 <div id="pantallaUsuario">
@@ -22,7 +23,7 @@
 Ingresa tu nombre
 </h3>
 
-<img src="logo.png" alt="logo" class="w-100 mb-3">
+<img src="/img/logo.png" alt="logo" class="w-100 mb-3">
 
 <input type="text"
 id="nombreUsuario"
@@ -153,30 +154,41 @@ Continuar
 <!-- PantallaNombreSorteo -->
 <div id="pantallaNombreSorteo" style="display: none;">
     <div class="mb-3">
-    <button id="btnBackFromNombreSorteo" class="btn btn-secondary">
-    &lt;
-    </button>
+        <button id="btnBackFromNombreSorteo" class="btn btn-secondary">
+            &lt;
+        </button>
     </div>
 
     <h3 class="text-center text-primary mb-3">
-    Nombre del Sorteo
+        Nombre del Sorteo
     </h3>
 
     <p class="text-muted text-center mb-3">
-    Selecciona un nombre o escribe uno personalizado
+        Arrastra un nombre al cuadro o escribe uno personalizado
     </p>
 
-    <div id="opcionesNombreSorteo" class="mb-3"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <p class="text-secondary small">Opciones disponibles:</p>
+            <div id="opcionesNombreSorteo" class="mb-3"></div>
+        </div>
+        <div class="col-md-6">
+            <p class="text-secondary small">Nombre seleccionado:</p>
+            <div id="areaDropNombreSorteo" class="area-drop mb-3">
+                <p class="text-muted text-center">Arrastra aquí o escribe</p>
+            </div>
+        </div>
+    </div>
 
     <input
-    type="text"
-    id="inputNombrePersonalizado"
-    class="form-control mb-3"
-    placeholder="Nombre personalizado">
+        type="text"
+        id="inputNombrePersonalizado"
+        class="form-control mb-3"
+        placeholder="O escribe un nombre personalizado...">
 
     <button id="btnContinuarNombreSorteo"
-    class="btn btn-primary w-100">
-    Continuar
+        class="btn btn-primary w-100">
+        Continuar
     </button>
 </div>
 
@@ -271,7 +283,7 @@ Continuar
 <!-- </div>
 </div> -->
 
-<script src="app.js"></script>
+<script src="/JS/app.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
